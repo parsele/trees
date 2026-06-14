@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amboseli Trees Map</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#10b981">
+</head>
+<body>
+  <div id="topbar">
+    <div class="container">
+      <div class="brand"><img id="siteLogo" src="/logo.svg" alt="logo" width="34" height="34"><span class="brand-text">Amboseli Green Ambassadors</span></div>
+      <nav class="nav">
+        <a href="/">Map</a>
+        <a href="/admin-login.html">Admin</a>
+        <button id="compactToggle" class="secondary">☰</button>
+        <button id="themeToggle" class="secondary">🌙</button>
+      </nav>
+    </div>
+  </div>
+
+  <div id="map"></div>
+  <div id="panel">
+    <header class="site-header">
+      <div class="brand">🌿 Amboseli Green Ambassadors</div>
+      <div class="tag">Tree Planting Map — Restoring Amboseli, one tree at a time</div>
+    </header>
+
+    <div id="mapStats">
+      <p><strong>Total trees planted:</strong> <span id="totalCount">0</span></p>
+    </div>
+
+    <hr>
+    <p><a href="/admin-login.html">Manage trees (admin)</a></p>
+  </div>
+  <button id="panelFab" class="fab" title="Open">☰</button>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="app.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>

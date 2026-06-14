@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+  <defs>
+    <linearGradient id="leafGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#4caf50"/>
+      <stop offset="1" stop-color="#2e7d32"/>
+    </linearGradient>
+    <linearGradient id="bgGrad" x1="0" x2="1">
+      <stop offset="0" stop-color="#e8f5e9"/>
+      <stop offset="1" stop-color="#c8e6c9"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="20" fill="url(#bgGrad)" />
+  <g transform="translate(20,16)">
+    <g id="leaves" fill="url(#leafGrad)">
+      <ellipse cx="40" cy="12" rx="26" ry="14"/>
+      <ellipse cx="18" cy="26" rx="18" ry="10"/>
+      <ellipse cx="62" cy="26" rx="18" ry="10"/>
+      <ellipse cx="36" cy="36" rx="22" ry="12"/>
+      <ellipse cx="54" cy="8" rx="14" ry="8"/>
+    </g>
+    <rect x="48" y="44" width="8" height="36" rx="3" fill="#6d4c41" />
+    <path d="M26 66c8 6 28 6 36 0" fill="#5d4037" opacity="0.9"/>
+  </g>
+  <title>Amboseli Trees Logo</title>
+</svg>

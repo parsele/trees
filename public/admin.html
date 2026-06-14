@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Amboseli Trees</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#10b981">
+</head>
+<body>
+  <div id="topbar">
+    <div class="container">
+      <div class="brand"><img id="siteLogo" src="/logo.svg" width="34" height="34"><span class="brand-text">Amboseli Green Ambassadors</span></div>
+      <nav class="nav">
+        <a href="/">Map</a>
+        <a href="/admin-login.html">Admin</a>
+        <button id="compactToggle" class="secondary">☰</button>
+        <button id="themeToggle" class="secondary">🌙</button>
+      </nav>
+    </div>
+  </div>
+
+  <div id="map"></div>
+  <div id="panel">
+    <p><button id="logoutBtn">Logout</button></p>
+
+    <div class="card">
+      <h3>Manage Trees</h3>
+      <p>Use the form below to add a tree manually, import a CSV dataset, or click on the map to set coordinates.</p>
+    </div>
+
+    <hr>
+    <h3>Add Tree (Admin)</h3>
+    <form id="adminForm">
+      <label>Species: <input name="species" required></label>
+      <label>Latitude: <input name="lat" required></label>
+      <label>Longitude: <input name="lng" required></label>
+      <label>Date: <input name="date" type="date"></label>
+      <label>Planted by: <input name="planted_by"></label>
+      <label>Notes: <input name="notes"></label>
+      <div style="margin-top:8px"><button type="submit">Add Tree</button>
+      <span style="margin-left:12px;font-size:0.9em;color:#666">Or click on the map to set lat/lng</span></div>
+    </form>
+
+    <hr>
+    <h3>Import CSV</h3>
+    <input type="file" id="csvFile" accept=".csv">
+    <button id="importCsv">Upload CSV</button>
+
+    <h3>Auto-import from URL</h3>
+    <input id="importUrl" placeholder="https://example.com/trees.csv">
+    <button id="fetchUrl">Fetch & Import</button>
+
+    <hr>
+    <h3>Existing Trees</h3>
+    <div id="treeList">Loading…</div>
+
+    <p><a href="/">Back to Map</a></p>
+  </div>
+  <button id="panelFab" class="fab" title="Open">☰</button>
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="admin.js"></script>
+  <script src="ui.js"></script>
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', async ()=>{
+      await fetch('/api/admin/logout', {method:'POST'});
+      window.location = '/admin-login.html';
+    });
+  </script>
+</body>
+</html>
