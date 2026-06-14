@@ -5,7 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+// Allow requests from the frontend and enable credentials for cookies.
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || true; // set to your Netlify URL in production
+const IS_PROD = process.env.NODE_ENV === 'production';
+app.use(cors({ origin: FRONTEND_ORIGIN, credentials: true }));
 app.use(bodyParser.json());
 
 // Simple admin auth: password from env or default. In-memory token store.
@@ -88,8 +91,10 @@ app.post('/api/admin/login', (req, res) => {
   if (!pw) return res.status(400).json({ error: 'Missing password' });
   if (pw !== ADMIN_PASSWORD) return res.status(401).json({ error: 'Invalid password' });
   adminToken = crypto.randomBytes(24).toString('hex');
-  // Set cookie (not signed)
-  res.cookie('admin_token', adminToken, { httpOnly: true, sameSite: 'Strict' });
+  // Set cookie (not signed). For cross-site logins we need SameSite=None and secure in production.
+  const cookieOpts = { httpOnly: true, sameSite: IS_PROD ? 'None' : 'Strict' };
+  if (IS_PROD) cookieOpts.secure = true;
+  res.cookie('admin_token', adminToken, cookieOpts);
   res.json({ ok: true });
 });
 
