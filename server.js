@@ -5,6 +5,10 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
+// Require ADMIN_PASSWORD to be set in the environment in production.
+if (!process.env.ADMIN_PASSWORD) {
+  throw new Error('ADMIN_PASSWORD environment variable is required');
+}
 // Allow requests from the frontend and enable credentials for cookies.
 const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || true; // set to your Netlify URL in production
 const IS_PROD = process.env.NODE_ENV === 'production';
