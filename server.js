@@ -13,7 +13,17 @@ app.use(bodyParser.json());
 
 // Simple admin auth: password from env or default. In-memory token store.
 const crypto = require('crypto');
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'lekaoo12';
+const DEFAULT_ADMIN_PASSWORD = 'lekaoo12';
+const ADMIN_PASSWORD_FILE = process.env.ADMIN_PASSWORD_FILE || '/etc/secrets/ADMIN_PASSWORD';
+let ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || DEFAULT_ADMIN_PASSWORD;
+try {
+  if (fs.existsSync(ADMIN_PASSWORD_FILE)) {
+    ADMIN_PASSWORD = fs.readFileSync(ADMIN_PASSWORD_FILE, 'utf8').trim();
+    console.log('Loaded ADMIN_PASSWORD from secret file:', ADMIN_PASSWORD_FILE);
+  }
+} catch (e) {
+  // ignore file read errors and fall back to env/default
+}
 let adminToken = null;
 
 function requireAdmin(req, res, next){
