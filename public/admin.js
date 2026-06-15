@@ -38,7 +38,7 @@ async function onDelete(e){
     alert('Deletion cancelled');
     return;
   }
-  const res = await fetch(API+'/'+id, { method:'DELETE' });
+  const res = await fetch(API+'/'+id, { method:'DELETE', credentials: 'include' });
   if(!res.ok){
     const j = await res.json().catch(()=>({ error: res.status }));
     return alert('Delete failed: '+(j.error || res.status));
@@ -64,7 +64,7 @@ if(form){
       notes: fd.get('notes') || ''
     };
     if(isNaN(tree.lat) || isNaN(tree.lng)) return alert('Invalid latitude or longitude');
-    const res = await fetch(API, {method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(tree)});
+    const res = await fetch(API, {method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(tree)});
     if(!res.ok){ const j = await res.json().catch(()=>({error:'Failed'})); return alert('Add failed: '+(j.error||res.status)); }
     form.reset();
     loadAll();
@@ -114,7 +114,7 @@ function importBatch(items){
 
   (async ()=>{
     for(const t of toSend){
-      await fetch(API, {method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify(t)}).catch(e=>console.error('import error',e));
+      await fetch(API, {method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(t)}).catch(e=>console.error('import error',e));
     }
     loadAll();
     alert('Import complete: '+toSend.length+' trees');
