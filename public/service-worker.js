@@ -43,10 +43,11 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(cached => {
       if (cached) return cached;
       return fetch(event.request).then(res => {
-        // optionally cache fetched assets
-        if(event.request.method === 'GET' && res && res.status === 200 && res.type !== 'opaque'){
+        // optionally cache fetched assets (only HTTP/HTTPS requests)
+        const protocol = url.protocol;
+        if(event.request.method === 'GET' && res && res.status === 200 && res.type !== 'opaque' && (protocol === 'http:' || protocol === 'https:')){
           const copy = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(()=>{});
         }
         return res;
       }).catch(() => {
